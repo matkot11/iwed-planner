@@ -10,6 +10,8 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "animejs": "^3.2.2",
+    "lucide-react": "^0.486.0",
     "next": "15.2.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
@@ -17,6 +19,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@types/animejs": "^3.1.13",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
