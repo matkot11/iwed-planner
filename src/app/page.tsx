@@ -9,10 +9,16 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 export default function StartPage() {
-  const SECTIONS = ['start', 'about', 'offer'] as const;
-  const [currentSection, setCurrentSection] = useState<(typeof SECTIONS)[number]>(SECTIONS[0]);
+  const SECTIONS = {
+    Start: 'start',
+    About: 'about',
+    Offer: 'offer',
+  } as const;
+  type Sections = (typeof SECTIONS)[keyof typeof SECTIONS];
+
+  const [currentSection, setCurrentSection] = useState<Sections>(SECTIONS.Start);
   const router = useRouter();
-  const animateTransitionToNextSection = (target: string, section?: (typeof SECTIONS)[number]) => {
+  const animateTransitionToNextSection = (target: string, section?: Sections) => {
     anime({
       targets: target,
       translateX: '-100vw',
@@ -31,26 +37,26 @@ export default function StartPage() {
 
   const nextSection = () => {
     switch (currentSection) {
-      case 'start':
-        animateTransitionToNextSection('#startSection', SECTIONS[1]);
+      case SECTIONS.Start:
+        animateTransitionToNextSection('#startSection', SECTIONS.About);
         break;
-      case 'about':
-        animateTransitionToNextSection('#aboutSection', SECTIONS[2]);
+      case SECTIONS.About:
+        animateTransitionToNextSection('#aboutSection', SECTIONS.Offer);
         break;
-      case 'offer':
+      case SECTIONS.Offer:
         animateTransitionToNextSection('#offerSection');
     }
   };
 
   return (
     <div className="flex h-screen flex-col items-center">
-      {currentSection === 'start' && <StartSection id="startSection" />}
-      {currentSection === 'about' && <AboutSection id="aboutSection" />}
-      {currentSection === 'offer' && <OfferSection id="offerSection" />}
+      {currentSection === SECTIONS.Start && <StartSection id="startSection" />}
+      {currentSection === SECTIONS.About && <AboutSection id="aboutSection" />}
+      {currentSection === SECTIONS.Offer && <OfferSection id="offerSection" />}
 
       <div className="bg-pink flex h-1/3 items-center justify-center self-stretch rounded-t-4xl">
         <Button variant="secondary" onClick={nextSection}>
-          {currentSection === 'start' ? "Let's start" : 'Next'}
+          {currentSection === SECTIONS.Start ? "Let's start" : 'Next'}
         </Button>
       </div>
     </div>
